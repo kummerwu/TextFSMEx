@@ -1,0 +1,7 @@
+Value ID10 (\d+)
+Value ID16 (0x[0-9a-fA-F]+)
+Value MsgName ([^\s]+)
+
+# Allway starts in 'Start' state.
+Start
+  ^\s*${ID10}\s+${ID16}\s+${MsgName} -> Record Start

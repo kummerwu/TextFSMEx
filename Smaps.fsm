@@ -1,0 +1,62 @@
+# define values
+Value idx (.)
+Value type (.)
+Value Filldown ProcessName (.+)
+Value Begin ([0-9a-fA-F]+)
+Value End ([0-9a-fA-F]+)
+Value Perms ([^\s]+)
+Value Offset ([0-9a-fA-F]+)
+Value Dev ([^\s]+)
+Value Inode ([^\s]+)
+Value PathName (.*)
+Value Required Size (\d+)
+Value KernelPageSize (\d+)
+Value MMUPageSize (\d+)
+Value Required Rss (\d+)
+Value Required Pss (\d+)
+Value Shared_Clean (\d+)
+Value Shared_Dirty (\d+)
+Value Private_Clean (\d+)
+Value Private_Dirty (\d+)
+Value Referenced (\d+)
+Value Anonymous (\d+)
+Value LazyFree (\d+)
+Value AnonHugePages (\d+)
+Value ShmemPmdMapped (\d+)
+Value Shared_Hugetlb (\d+)
+Value Private_Hugetlb (\d+)
+Value Swap (\d+)
+Value SwapPss (\d+)
+Value Locked (\d+)
+Value VmFlags ((\w|\s)+)
+
+# Allway starts in 'Start' state.
+Start
+  ^@@@@@${ProcessName}@@@@@ -> Record Item
+
+# A state transition was not strictly necessary but helpful for the example.
+Item
+  ^${Begin}\-${End}\s+${Perms}\s+${Offset}\s+${Dev}\s+${Inode}\s+${PathName}
+  ^Size:\s+${Size} kB
+  ^KernelPageSize:\s+${KernelPageSize} kB
+  ^MMUPageSize:\s+${MMUPageSize} kB
+  ^Rss:\s+${Rss} kB
+  ^Pss:\s+${Pss} kB
+  ^Shared_Clean:\s+${Shared_Clean} kB
+  ^Shared_Dirty:\s+${Shared_Dirty} kB
+  ^Private_Clean:\s+${Private_Clean} kB
+  ^Private_Dirty:\s+${Private_Dirty} kB
+  ^Referenced:\s+${Referenced} kB
+  ^Anonymous:\s+${Anonymous} kB
+  ^LazyFree:\s+${LazyFree} kB
+  ^AnonHugePages:\s+${AnonHugePages} kB
+  ^ShmemPmdMapped:\s+${ShmemPmdMapped} kB
+  ^Shared_Hugetlb:\s+${Shared_Hugetlb} kB
+  ^Private_Hugetlb:\s+${Private_Hugetlb} kB
+  ^Swap:\s+${Swap} kB
+  ^SwapPss:\s+${SwapPss} kB
+  ^Locked:\s+${Locked} kB
+  ^VmFlags:\s*${VmFlags} -> Record Item
+  
+
+# An implicit EOF state outputs the last record.
